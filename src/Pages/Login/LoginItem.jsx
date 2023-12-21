@@ -1,30 +1,44 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 
 const LoginItem = ({setShowReg}) => {
     const [showPass, setShowPass] = useState(false)
+    const { register, handleSubmit, formState: { errors }} = useForm()
+
+    const handlePage = () => {
+        setShowReg(true)
+        localStorage.setItem("showReg", true)
+    }
+
+    const onSubmit = (data) => {
+        console.log(data);
+    } 
 
     return (
         <div>
             <h2 className="text-2xl font-semibold text-center">Login to Your Account</h2>
-            <form className="mt-10 space-y-4">
+            <form onSubmit={handleSubmit(onSubmit)} className="mt-10 space-y-4">
                 <div>
                     <label className="font-medium" htmlFor="email">Email</label>
-                    <input id="email" type="email" name="email" placeholder="Enter your email" className="w-full mt-2 border border-gray-300 py-2 px-3 rounded-lg focus:border-indigo-600 focus:outline-none" />
+                    <input {...register("email", { required: true })} id="email" type="email" name="email" placeholder="Enter your email" className="w-full mt-2 border border-gray-300 py-2 px-3 rounded-lg focus:border-indigo-600 focus:outline-none" />
+                    {errors.email && <span className="text-red-600 font-medium">Email is required</span>}
                 </div>
                 <div className='relative'>
                     <label className="font-medium" htmlFor="password">Password</label>
-                    <input id="password" type={showPass ? 'text' : 'password'} name="password" placeholder="Enter your password" className="w-full mt-2 border border-gray-300 py-2 px-3 rounded-lg focus:border-indigo-600 focus:outline-none" />
+                    <input {...register("password", { required: true })} id="password" type={showPass ? 'text' : 'password'} name="password" placeholder="Enter your password" className="w-full mt-2 border border-gray-300 py-2 px-3 rounded-lg focus:border-indigo-600 focus:outline-none" />
                     <span onClick={() => setShowPass(!showPass)} className="absolute text-xs font-semibold bottom-3 right-3 cursor-pointer">
                         {
                         showPass ? 
-                        ''
+                        <IoEyeOffOutline className="text-lg" />
                         :
-                        ''
+                        <IoEyeOutline className="text-lg" />
                         }
                     </span>
                 </div>
-                <button className='capitalize font-medium bg-indigo-700 text-white text-[15px] py-2 rounded-lg w-full hover:translate-x-2 transition-all'>Login</button>
-                <p className='text-center font-medium'>Don{"'"}t Have An Account <span onClick={() => setShowReg(true)} className="underline text-indigo-600 cursor-pointer">Register</span></p>
+                {errors.password && <span className="text-red-600 font-medium">Password is required</span>}
+                <button className='capitalize font-medium bg-indigo-700 text-white text-[15px] py-2.5 rounded-lg w-full hover:translate-x-2 transition-all'>Login</button>
+                <p className='text-center font-medium'>Don{"'"}t Have An Account <span onClick={handlePage} className="underline text-indigo-600 cursor-pointer">Register</span></p>
             </form>
         </div>
     );

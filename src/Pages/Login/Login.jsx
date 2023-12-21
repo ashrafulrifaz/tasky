@@ -1,10 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LoginItem from "./LoginItem";
 import RegisterItem from "./RegisterItem";
 
 const Login = () => {
-    const [showReg, setShowReg] = useState(false)
-    console.log(showReg);
+    const isShwoReg = localStorage.getItem("showReg")
+    const [showReg, setShowReg] = useState(isShwoReg || false)
+
+    useEffect(() => {
+        if(isShwoReg === true || isShwoReg === false){
+            setShowReg(isShwoReg)
+        }
+    }, [isShwoReg])
 
     return (
         <div className="py-10">
