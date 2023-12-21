@@ -1,15 +1,20 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
+import { AuthContext } from "../../Provider/Provider";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const RegisterItem = ({setShowReg}) => {
     const [showPass, setShowPass] = useState(false)
     const [loading, setLoading] = useState(false)
     const { register, handleSubmit, formState: { errors }} = useForm()
+    const {createNewUser} = useContext(AuthContext)
+    const navigate = useNavigate()
+
     const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_API_KEY
     const image_hosting_url = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
-    console.log(loading);
 
     const handlePage = () => {
         setShowReg(false)
@@ -19,13 +24,37 @@ const RegisterItem = ({setShowReg}) => {
     const onSubmit = async(data) => {
         setLoading(true)
         const imageFile = {image: data.image[0]}
-        const res = await axios.post(image_hosting_url, imageFile, {
-            headers: {
+        try {
+            const res = await axios.post(image_hosting_url, imageFile, {
+              headers: {
                 'Content-Type': 'multipart/form-data',
+              },
+            });
+      
+            if (res?.data?.success) {
+              createNewUser(data.email, data.password)
+                .then(() => {
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Registration Successfull",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    setLoading(false)
+                    navigate('/')
+                })
+                .catch((err) => {
+                  console.log(err.message);
+                  setLoading(false)
+                });
+            } else {
+              console.log('Image upload failed');
+              setLoading(false)
             }
-        })
-        if(res.data.success){
-            console.log(res);
+        } catch (error) {
+            console.log(error.message);
+            setLoading(false)
         }
         setLoading(false)
     }

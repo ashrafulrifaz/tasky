@@ -1,10 +1,16 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
+import { AuthContext } from "../../Provider/Provider";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const LoginItem = ({setShowReg}) => {
     const [showPass, setShowPass] = useState(false)
     const { register, handleSubmit, formState: { errors }} = useForm()
+    const {LoginUser} = useContext(AuthContext)
+    const [loading, setLoading] = useState(false)
+    const navigate = useNavigate()
 
     const handlePage = () => {
         setShowReg(true)
@@ -12,7 +18,24 @@ const LoginItem = ({setShowReg}) => {
     }
 
     const onSubmit = (data) => {
-        console.log(data);
+        setLoading(true)
+        LoginUser(data.email, data.password)
+            .then(() => {
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Login Successfull",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                setLoading(false)
+                navigate('/')
+            })
+            .catch((err) => {
+                console.log(err.message);
+                setLoading(false)
+            })
+        setLoading(false)
     } 
 
     return (
