@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body {
+    font-family: 'Poppins', sans-serif;
+}
+
+#header {    
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+#header li a,
+#footer li a {
+    @apply font-medium text-black hover:text-indigo-600 transition-colors flex items-center gap-1
+}
+
+#header li .active,
+#footer li .active {
+    @apply text-indigo-600
+}
+
+#useful_box,
+#authentication_container {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+#useful_box:hover {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+#useful_box p {
+    @apply text-slate-600 font-medium
+}
+
+/* FOOTER */
+
+#socials a {
+    @apply border px-2.5 py-2 rounded-lg inline-block transition-all
+}
+
+#facebook {
+    @apply border-[#0866FF]
+}
+#facebook:hover {
+    @apply bg-[#0866FF]
+}
+#facebook:hover svg,
+#facebook:hover span {
+    @apply text-white
+}
+#facebook svg,
+#facebook span {
+    @apply text-[#0866FF]
+}
+
+#twitter {
+    @apply border-black
+}
+#twitter:hover {
+    @apply bg-black
+}
+#twitter:hover svg,
+#twitter:hover span {
+    @apply text-white
+}
+#twitter svg,
+#twitter span {
+    @apply text-black
+}
+
+#instagram {
+    @apply border-[#980FF7]
+}
+#instagram:hover {
+    @apply bg-[#980FF7]
+}
+#instagram:hover svg,
+#instagram:hover span {
+    @apply text-white
+}
+#instagram svg,
+#instagram span {
+    @apply text-[#980FF7]
+}
+
+#linkedin {
+    @apply border-[#0A66C2]
+}
+#linkedin:hover {
+    @apply bg-[#0A66C2]
+}
+#linkedin:hover svg,
+#linkedin:hover span {
+    @apply text-white
+}
+#linkedin svg,
+#linkedin span {
+    @apply text-[#0A66C2]
+}
