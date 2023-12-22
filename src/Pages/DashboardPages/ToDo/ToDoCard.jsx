@@ -22,7 +22,7 @@ const ToDoCard = ({task}) => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`http://localhost:5000/tasks/${_id}`)
+                axios.delete(`https://task-management-server-indol.vercel.app/tasks/${_id}`)
                     .then(res => {
                         if(res.deletedCount){
                             Swal.fire({

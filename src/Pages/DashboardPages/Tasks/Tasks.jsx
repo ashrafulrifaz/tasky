@@ -33,7 +33,7 @@ const Tasks = () => {
             status: 'to-do'
         }
 
-        axios.post('http://localhost:5000/tasks', newTask)  
+        axios.post('https://task-management-server-indol.vercel.app/tasks', newTask)  
             .then(res => {
                 if(res.data.insertedId){ 
                     Swal.fire({

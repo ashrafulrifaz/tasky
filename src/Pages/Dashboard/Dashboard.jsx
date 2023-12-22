@@ -37,7 +37,7 @@ const Dashboard = () => {
         setShowDragBorder(null)
         const todoId = e.dataTransfer.getData('todoId')
         const newStatus = e.target.textContent.toLowerCase()
-        axios.put(`http://localhost:5000/tasks/${todoId}`, {status: newStatus})
+        axios.put(`https://task-management-server-indol.vercel.app/tasks/${todoId}`, {status: newStatus})
         .then(res => {
             if(res.data.modifiedCount > 0) {
                Swal.fire({

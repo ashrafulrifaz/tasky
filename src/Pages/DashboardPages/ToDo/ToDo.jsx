@@ -4,7 +4,7 @@ import ToDoCard from "./ToDoCard";
 import { IoNavigateCircleOutline } from "react-icons/io5";
 
 const ToDo = () => {
-    const {data} = useTaskData()
+    const {data, isPending} = useTaskData()
     const todoData = data?.filter(item => item.status === 'to do') || []
 
     return (
@@ -15,11 +15,16 @@ const ToDo = () => {
                     <button className="flex gap-2 items-center rounded-lg py-2.5 px-4 bg-indigo-600 text-white font-medium hover:translate-x-2 transition-all mt-4 text-sm">Add New <IoNavigateCircleOutline className="text-lg" /></button>
                 </Link>
             </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-10">
-                {
-                    todoData?.map(task => <ToDoCard key={task._id} task={task}></ToDoCard>)
-                }
-            </div>
+            {
+                isPending ?
+                <span className="loading loading-spinner loading-md"></span>
+                :
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-10">
+                    {
+                        todoData?.map(task => <ToDoCard key={task._id} task={task}></ToDoCard>)
+                    }
+                </div>
+            }
         </div>
     );
 };

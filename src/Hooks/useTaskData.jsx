@@ -8,7 +8,7 @@ const useTaskData = () => {
     const { data, isPending, refetch } = useQuery({
         queryKey: ['all_blogs'],
         queryFn: async () => {
-            const res = await axios.get(`http://localhost:5000/tasks?email=${user?.email}`)
+            const res = await axios.get(`https://task-management-server-indol.vercel.app/tasks?email=${user?.email}`, {withCredentials:true})
             return res.data
         }
     })
