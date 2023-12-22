@@ -17,8 +17,6 @@ const Dashboard = () => {
     const [showChildren, setShowChildren] = useState(false)
     const [showDragBorder, setShowDragBorder] = useState(null)
     const {refetch} = useTaskData()
-    const isCurrentPath = window.location.pathname === '/dashboard';
-    const activeClassName = isCurrentPath ? 'active' : '';  
     
     useEffect(() => {
         setShowDragBorder(null)    
@@ -65,18 +63,20 @@ const Dashboard = () => {
     return (
         <div className="flex flex-col sm:flex-row min-h-screen bg-slate-100 dashboard">
             <div className="sidebar">
-                <div>
-                    <h2 className="font-bold text-3xl">Task<span className="text-indigo-600">y</span></h2>
+                <div className="flex md:flex-col justify-between md:justify-start items-center md:items-start">
+                    <Link to="/">
+                        <h2 className="font-bold text-2xl md:text-3xl">Task<span className="text-indigo-600">y</span></h2>
+                    </Link>
                     <div className="flex sm:flex-col items-center justify-center">
-                        <ul className="flex sm:flex-col mt-0 sm:mt-5 lg:mt-8 space-y-0 md:space-y-5 w-full">
+                        <ul className="flex sm:flex-col gap-3 md:gap-0 mt-0 sm:mt-5 lg:mt-8 space-y-0 md:space-y-5 w-full">
                             <li>
-                                <Link to="/dashboard" className={`${activeClassName && 'active'} flex items-center gap-2`} exact>
+                                <NavLink to="/dashboard/home" className={`flex items-center gap-2`}>
                                     <RxDashboard className="mt-0 lg:mt-[2px] text-xl md:text-lg" />
-                                    <span className="capitalize font-main font-medium md:text-sm lg:text-[15px] hidden sm:block">Dashboard</span>
-                                </Link>
+                                    <span className=" capitalize font-main font-medium md:text-sm lg:text-[15px] hidden sm:block">Dashboard</span>
+                                </NavLink>
                             </li>
-                            <li>
-                                <NavLink to="/dashboard/tasks" className={`${activeClassName && 'active'} flex items-center gap-2 justify-between`} exact onClick={() => setShowChildren(!showChildren)}>
+                            <li className="hidden md:block">
+                                <NavLink to="/dashboard/tasks" className={`items-center gap-2 justify-between hidden md:flex`} exact onClick={() => setShowChildren(!showChildren)}>
                                     <div className="flex items-center gap-2">
                                         <BsJournalPlus className="mt-0 lg:mt-[2px] text-xl md:text-lg" />
                                         <span className="capitalize font-main font-medium md:text-sm lg:text-[15px] hidden sm:block">Tasks</span>
@@ -110,11 +110,40 @@ const Dashboard = () => {
                                     </li>
                                 </ul>
                             </li>
+                            <li className="md:hidden">
+                                <NavLink to="/dashboard/tasks">
+                                    <BsJournalPlus className="mt-0 lg:mt-[2px] text-xl md:text-lg" />
+                                </NavLink>
+                            </li>
+                            <li className="md:hidden">
+                                <div onDragLeave={handleDragLeave} onDragOver={handleDraging} onDrop={handleDropped}>
+                                    <NavLink to="/dashboard/tasks/todo" className={`flex items-center gap-2 ${showDragBorder === 'to do' ? 'border border-indigo-600 border-dashed rounded-md p-2' : ''}`}>
+                                        <LuListTodo className="mt-0 lg:mt-[2px] text-xl md:text-lg" />
+                                        <span className="capitalize font-main font-medium md:text-sm lg:text-[15px] hidden sm:block">To Do</span>
+                                    </NavLink>
+                                </div>
+                            </li>
+                            <li className="md:hidden">
+                                <div onDragLeave={handleDragLeave} onDragOver={handleDraging} onDrop={handleDropped}>
+                                    <NavLink to="/dashboard/tasks/ongoing" className={`flex items-center gap-2 ${showDragBorder === 'ongoing' ? 'border border-indigo-600 border-dashed rounded-md p-2' : ''}`}>
+                                        <IoSync className="mt-0 lg:mt-[2px] text-xl md:text-lg" />
+                                        <span className="capitalize font-main font-medium md:text-sm lg:text-[15px] hidden sm:block">Ongoing</span>
+                                    </NavLink>                                            
+                                </div>
+                            </li>
+                            <li className="md:hidden">
+                                <div onDragLeave={handleDragLeave} onDragOver={handleDraging} onDrop={handleDropped}>    
+                                    <NavLink to="/dashboard/tasks/completed" className={`flex items-center gap-2 ${showDragBorder === 'completed' ? 'border border-indigo-600 border-dashed rounded-md p-2' : ''}`}>
+                                        <FaRegCircleCheck className="mt-0 lg:mt-[2px] text-xl md:text-lg" />
+                                        <span className="capitalize font-main font-medium md:text-sm lg:text-[15px] hidden sm:block">Completed</span>
+                                    </NavLink>                                        
+                                </div>
+                            </li>
                         </ul>
                     </div>
                 </div>
-                <div>
-                    <div className="flex gap-8 items-center">
+                <div className="hidden md:block">
+                    <div className="flex gap-8 items-center justify-between">
                         <img src={user?.photoURL} className="w-10 h-10 rounded-full" alt="" />
                         <Link to="/">
                             <ImExit className="text-2xl" />

@@ -13,8 +13,8 @@ const Login = () => {
     }, [isShwoReg])
 
     return (
-        <div className="py-10">
-            <div className="relative w-2/5 mx-auto shadow-xl p-10 rounded-lg" id="authentication_container">
+        <div className="py-10 max-w-[90%] mx-auto xl:max-w-[1100px]">
+            <div className="relative w-full md:w-3/5 lg:w-2/5 mx-auto shadow-xl p-6 md:p-10 rounded-lg" id="authentication_container">
                 <div className={`${!showReg ? 'block' : 'hidden'}`}>
                     <LoginItem setShowReg={setShowReg}></LoginItem>
                 </div>

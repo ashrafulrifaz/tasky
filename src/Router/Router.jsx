@@ -9,11 +9,13 @@ import Tasks from "../Pages/DashboardPages/Tasks/Tasks";
 import ToDo from "../Pages/DashboardPages/ToDo/ToDo";
 import Ongoing from "../Pages/DashboardPages/ToDo/Ongoing";
 import Completed from "../Pages/DashboardPages/ToDo/Completed";
+import ErrorPage from "../Pages/Error/ErrorPage";
 
 const Router = createBrowserRouter([
     {
         path: '/',
         element: <MainLayout></MainLayout>,
+        errorElement: <ErrorPage></ErrorPage>,
         children: [
             {
                 path: '/',
@@ -28,9 +30,10 @@ const Router = createBrowserRouter([
     {
         path: '/dashboard',
         element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
+        errorElement: <ErrorPage></ErrorPage>,
         children: [
             {
-                path: '/dashboard',
+                path: '/dashboard/home',
                 element: <DashboardHome></DashboardHome>
             },
             {

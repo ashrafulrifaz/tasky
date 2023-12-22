@@ -6,6 +6,8 @@
 
 html, body {
     font-family: 'Poppins', sans-serif;
+    width: 100%;
+    overflow-x: hidden
 }
 
 #header {    
@@ -107,12 +109,27 @@ html, body {
 }
 
 .sidebar li .active {
-    @apply text-indigo-600 border-r-4 rounded-sm border-indigo-600
+    @apply text-indigo-600 md:border-r-4 rounded-sm border-indigo-600
 }
 
 #task_card:hover #delete_btn {
     @apply opacity-100
 }
+
+.swal2-cancel {
+    margin-top: 0px!important
+}
+
+#nav_item li a,
+#nav_item li svg {
+    @apply text-base
+}
+
+#nav_item li .active {
+    background-color: #fff!important;
+}
+
+/* LOADER */
 
 
 .loader {

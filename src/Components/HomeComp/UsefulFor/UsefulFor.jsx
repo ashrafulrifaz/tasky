@@ -9,10 +9,10 @@ const UsefulFor = () => {
     return (
         <div className="py-14">
             <div className="space-y-3">
-                <h2 className='text-3xl font-semibold leading-snug'>Who Benefits from Our App?</h2>
+                <h2 className='text-2xl md:text-3xl font-semibold leading-snug'>Who Benefits from Our App?</h2>
                 <p className='text-slate-800 font-medium'>Empowering individuals and teams with streamlined productivity solutions. Explore today!</p>
             </div>
-            <div className="grid grid-cols-3 gap-8 mt-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8 mt-6">
                 <div id="useful_box" className="transition-all p-8 rounded-lg space-y-4">
                     <PiStudentFill className="text-4xl text-indigo-600" />
                     <h3 className="font-semibold text-xl">Students</h3>

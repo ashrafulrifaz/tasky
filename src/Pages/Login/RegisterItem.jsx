@@ -2,17 +2,19 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
+import { FcGoogle } from "react-icons/fc";
 import { AuthContext } from "../../Provider/Provider";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import auth from "../../firebase.config";
-import { updateProfile } from "firebase/auth";
+import { GoogleAuthProvider, updateProfile } from "firebase/auth";
 
 const RegisterItem = ({setShowReg}) => {
     const [showPass, setShowPass] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [errorMessage, setErroMessage] = useState(null)
     const { register, handleSubmit, formState: { errors }} = useForm()
-    const {user, setUser, createNewUser} = useContext(AuthContext)
+    const {user, setUser, createNewUser, googleLogin} = useContext(AuthContext)
     const navigate = useNavigate()
 
     const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_API_KEY
@@ -65,6 +67,22 @@ const RegisterItem = ({setShowReg}) => {
         setLoading(false)
     }
 
+    const handleGoogleLogin = () => {
+        const provider = new GoogleAuthProvider()
+        googleLogin(provider)
+         .then(() => {
+            Swal.fire({
+               position: 'top-end',
+               icon: 'success',
+               title: 'Login Successful',
+               showConfirmButton: false,
+               timer: 3000
+            })
+            navigate('/')
+        })
+        .then(error => setErroMessage(error.message))
+    }
+
     return (
         <div>
             <h2 className="text-2xl font-semibold text-center">Create an Account</h2>
@@ -100,6 +118,7 @@ const RegisterItem = ({setShowReg}) => {
                 <button className='capitalize font-medium bg-indigo-700 text-white text-[15px] py-2.5 rounded-lg w-full hover:translate-x-2 transition-all'>Register</button>
                 <p className='text-center font-medium'>Don{"'"}t Have An Account <span onClick={handlePage} className="underline text-indigo-600 cursor-pointer">Login</span></p>
             </form>
+            <button onClick={handleGoogleLogin} className="capitalize font-medium text-indigo-700 text-[15px] py-2.5 px-4 rounded-lg  hover:translate-x-2 transition-all flex gap-2 items-center border border-indigo-600 mx-auto mt-3">Continue With Google <FcGoogle className="text-lg" /></button>
         </div>
     );
 };
