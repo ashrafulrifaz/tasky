@@ -4,8 +4,12 @@ import { FiClock } from "react-icons/fi";
 import { FaCircleCheck } from "react-icons/fa6";
 import Swal from "sweetalert2";
 
-const TaskCard = ({task}) => {
-    const {_id, priority, deadline, title, status} = task || {}
+const ToDoCard = ({task}) => {
+    const {_id,  priority, deadline, title, description, status} = task || {}
+    
+    const handleDragItem = (e) => {
+        e.dataTransfer.setData('todoId', _id)
+    }
 
     const handleDelete = () => {
         Swal.fire({
@@ -35,7 +39,7 @@ const TaskCard = ({task}) => {
     }
 
     return (
-        <div className="p-4 rounded-lg border border-slate-200 relative hover:border-red-600 transition-all" id="task_card">
+        <div draggable onDragStart={handleDragItem} className={`p-4 rounded-lg border border-slate-200 relative hover:border-red-600 transition-all`} id="task_card">
             <div className="flex justify-between items-center">
                 <span className={`capitalize font-medium py-1 px-3 rounded-lg text-sm ${
                     priority === 'high' ? 'text-red-500 bg-red-100' 
@@ -52,6 +56,8 @@ const TaskCard = ({task}) => {
                 }
             </div>
             <h3 className="mt-4 text-xl font-medium">{title}</h3>
+            <hr className="my-2" />
+            <p className="text-slate-800 font-medium">{description}</p>
             <div onClick={handleDelete} id="delete_btn" className="absolute bottom-0 right-0 opacity-0 transition-all duration-700 p-1.5 bg-red-600 rounded-tl-lg rounded-br-lg cursor-pointer">
                 <FiTrash className="text-xl text-white" />
             </div>
@@ -59,4 +65,4 @@ const TaskCard = ({task}) => {
     );
 };
 
-export default TaskCard;
+export default ToDoCard;

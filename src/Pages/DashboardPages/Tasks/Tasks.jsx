@@ -26,7 +26,8 @@ const Tasks = () => {
             description: data.description,
             deadline: startDate?.toDateString().slice(0, 10),
             priority: data.priority,
-            email: user?.email
+            email: user?.email,
+            status: 'to-do'
         }
 
         axios.post('http://localhost:5000/tasks', newTask)  
@@ -45,8 +46,6 @@ const Tasks = () => {
                     setStartDate(null)
                 }
             })
-
-        console.log(newTask);
         setLoading(false)
     }
 

@@ -6,6 +6,9 @@ import PrivateRoute from "./PrivateRoute";
 import Dashboard from "../Pages/Dashboard/Dashboard";
 import DashboardHome from "../Pages/DashboardPages/DashboardHome/DashboardHome";
 import Tasks from "../Pages/DashboardPages/Tasks/Tasks";
+import ToDo from "../Pages/DashboardPages/ToDo/ToDo";
+import Ongoing from "../Pages/DashboardPages/ToDo/Ongoing";
+import Completed from "../Pages/DashboardPages/ToDo/Completed";
 
 const Router = createBrowserRouter([
     {
@@ -33,6 +36,18 @@ const Router = createBrowserRouter([
             {
                 path: '/dashboard/tasks',
                 element: <Tasks></Tasks>
+            },
+            {
+                path: '/dashboard/tasks/todo',
+                element: <ToDo></ToDo>
+            },
+            {
+                path: '/dashboard/tasks/ongoing',
+                element: <Ongoing></Ongoing>
+            },
+            {
+                path: '/dashboard/tasks/completed',
+                element: <Completed></Completed>
             },
         ]
     }
