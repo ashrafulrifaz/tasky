@@ -10,7 +10,6 @@ import ToDo from "../Pages/DashboardPages/ToDo/ToDo";
 import Ongoing from "../Pages/DashboardPages/ToDo/Ongoing";
 import Completed from "../Pages/DashboardPages/ToDo/Completed";
 import ErrorPage from "../Pages/Error/ErrorPage";
-import UpdateTasks from "../Pages/DashboardPages/Tasks/updateTasks";
 
 const Router = createBrowserRouter([
     {
