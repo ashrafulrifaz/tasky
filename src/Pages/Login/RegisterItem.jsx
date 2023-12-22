@@ -5,12 +5,14 @@ import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import { AuthContext } from "../../Provider/Provider";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import auth from "../../firebase.config";
+import { updateProfile } from "firebase/auth";
 
 const RegisterItem = ({setShowReg}) => {
     const [showPass, setShowPass] = useState(false)
     const [loading, setLoading] = useState(false)
     const { register, handleSubmit, formState: { errors }} = useForm()
-    const {createNewUser} = useContext(AuthContext)
+    const {user, setUser, createNewUser} = useContext(AuthContext)
     const navigate = useNavigate()
 
     const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_API_KEY
@@ -34,6 +36,10 @@ const RegisterItem = ({setShowReg}) => {
             if (res?.data?.success) {
               createNewUser(data.email, data.password)
                 .then(() => {
+                    updateProfile(auth.currentUser, {
+                        displayName: data.name, photoURL: res.data.data.display_url
+                    })
+                    setUser({...user, displayName: data.name, photoURL: res.data.data.display_url})
                     Swal.fire({
                         position: "top-end",
                         icon: "success",
