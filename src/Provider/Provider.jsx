@@ -1,7 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import auth from "../firebase.config";
-import axios from "axios";
 
 export const AuthContext = createContext(null)
 
@@ -13,15 +12,6 @@ const Provider = ({children}) => {
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
             setLoading(false)
             setUser(currentUser)
-            const userEmail = currentUser?.email || user?.email         
-            const loggedUser = {email: userEmail}
-            if(currentUser){
-               axios.post('https://task-management-server-indol.vercel.app/jwt', loggedUser, {withCredentials: true})
-               .then(res => console.log(res.data))
-            } else {
-               axios.post('https://task-management-server-indol.vercel.app/logout', loggedUser, {withCredentials: true})
-               .then(res => console.log(res.data))
-            }
         })
 
         return () => {
